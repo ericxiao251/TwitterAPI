@@ -43,12 +43,15 @@ class TwitterRestApiBaseClass(object):
             if key not in parameters:
                 raise KeyError("required parameter %s was not given." % (key))
 
-    def build_response_query(self, resource, required, parameters):
-        request = self.twitter.base_url + resource + '.json?'
-        for key, value in parameters.items():
-            request = str(request + key + '=' + value + '&')
+        return True
 
-        return request[:-1]
+    def build_response_query(self, resource, required, parameters):
+        if self.check_parameters(required, parameters):
+            request = self.twitter.base_url + resource + '.json?'
+            for key, value in parameters.items():
+                request = str(request + key + '=' + value + '&')
+
+            return request[:-1]
 
 class Search(TwitterRestApiBaseClass):
     def tweet(self, **kwargs):
