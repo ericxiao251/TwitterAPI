@@ -34,16 +34,25 @@ class TwitterRestApiBaseClass(object):
         else:
             raise TypeError("a twitter object was not passed in.")
 
-
-class TwitterGetRequest(TwitterRestApiBaseClass):
-    def __get__(self, url):
+    def __get__(self, resource, required, parameters):
+        url = self.build_response_query(resource, required, parameters)
         return self.twitter.__get__(url)
 
+    def check_parameters(self, required, parameters):
+        for key in required:
+            if key not in parameters:
+                raise KeyError("required parameter %s was not given." % (key))
+
+    def build_response_query(self, resource, required, parameters):
+        request = self.twitter.base_url + resource + '.json?'
+        for key, value in parameters.items():
+            request = str(request + key + '=' + value + '&')
 
 class Search(TwitterGetRequest):
     def tweet(self, q, **kwargs):
         if not q:
             raise ValueError('No parameter q passed in.')
+        return request[:-1]
 
         request = str(self.twitter.base_url + '/search/tweets.json?q=' + q)
         for key, value in kwargs.items():
