@@ -24,6 +24,20 @@ class Twitter(object):
 		return response
 
 
+class TwitterRestApiBaseClass(object):
+	def __init__(self, twitter):
+		if isinstance(twitter, Twitter):
+			self.twitter = Twitter(twitter.consumer_key, twitter.consumer_secret,
+								   twitter.access_token_key, twitter.access_token_secret)
+		else:
+			raise TypeError("a twitter object was not passed in.")
+
+
+class TwitterGetRequest(TwitterRestApiBaseClass):
+	def __get__(self, url):
+		return self.twitter.__get__(url)
+
+
 if __name__ == '__main__':
 	CONSUMER_KEY = 'i6osYlAMvLyiSFYV56eHEcA50'
 	CONSUMER_SECRET = 'A67oLT5d2NzTZc6xTbYGoJI8GDecRHRpJ8hFJenMM8lfbqLOBA'
