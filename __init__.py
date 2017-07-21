@@ -48,17 +48,13 @@ class TwitterRestApiBaseClass(object):
         for key, value in parameters.items():
             request = str(request + key + '=' + value + '&')
 
-class Search(TwitterGetRequest):
-    def tweet(self, q, **kwargs):
-        if not q:
-            raise ValueError('No parameter q passed in.')
         return request[:-1]
 
-        request = str(self.twitter.base_url + '/search/tweets.json?q=' + q)
-        for key, value in kwargs.items():
-            request = str('&' + request + key + '=' + value)
-
-        return self.__get__(request)
+class Search(TwitterRestApiBaseClass):
+    def tweet(self, **kwargs):
+        resource = 'home_timeline'
+        required = ['q']
+        return self.__get__(resource, required, kwargs)
 
 
 if __name__ == '__main__':
@@ -68,6 +64,6 @@ if __name__ == '__main__':
     OAUTH_TOKEN_SECRET = 'p7PV5i3Gdz5mEXsbBSJG1PzJ1rU6woKe8359r1cCWaecD'
 
     twitter_object = Twitter(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-    tweet = Search(twitter_object).tweet('%23freebandnames')
+    tweet = Search(twitter_object).tweet(q='%23freebandnames')
 
     print(tweet)
