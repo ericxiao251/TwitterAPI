@@ -20,9 +20,11 @@ class Twitter(object):
             print('Error, invalid keys')
 
     def __get__(self, url):
-        response, data = self.client.request(url)
-        return response
-
+        try:
+            response, data = self.client.request(url)
+            return response
+        except:
+            raise KeyError("invalid parameters passed to request.")
 
 class TwitterRestApiBaseClass(object):
     def __init__(self, twitter):
