@@ -29,8 +29,7 @@ class Twitter(object):
 class TwitterRestApiBaseClass(object):
     def __init__(self, twitter):
         if isinstance(twitter, Twitter):
-            self.twitter = Twitter(twitter.consumer_key, twitter.consumer_secret,
-                                   twitter.access_token_key, twitter.access_token_secret)
+            self.twitter = twitter
         else:
             raise TypeError("a twitter object was not passed in.")
 
