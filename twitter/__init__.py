@@ -1,5 +1,5 @@
 import oauth2 as oauth
-
+import json
 
 class Twitter(object):
     def __init__(self, consumer_key, consumer_secret, access_token_key, access_token_secret):
@@ -23,7 +23,7 @@ class Twitter(object):
     def __get__(self, url):
         try:
             response, data = self.client.request(url)
-            return data
+            return json.loads(data)
         except:
             raise KeyError("invalid parameters passed to request.")
 
