@@ -1,5 +1,6 @@
 import oauth2 as oauth
 
+
 class Twitter(object):
     def __init__(self, consumer_key, consumer_secret, access_token_key, access_token_secret):
         self.consumer_key = consumer_key
@@ -16,7 +17,7 @@ class Twitter(object):
 
             self.client = oauth.Client(consumer, access_token)
             self.base_url = 'https://api.twitter.com/1.1/'
-        except:
+        except KeyError:
             print('Error, invalid keys')
 
     def __get__(self, url):
@@ -25,6 +26,7 @@ class Twitter(object):
             return response
         except:
             raise KeyError("invalid parameters passed to request.")
+
 
 class TwitterRestApiBaseClass(object):
     def __init__(self, twitter):
@@ -37,7 +39,8 @@ class TwitterRestApiBaseClass(object):
         url = self.build_response_query(resource, required, parameters)
         return self.twitter.__get__(url)
 
-    def check_parameters(self, required, parameters):
+    @staticmethod
+    def check_parameters(required, parameters):
         for key in required:
             if key not in parameters:
                 raise KeyError("required parameter %s was not given." % (key))
