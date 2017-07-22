@@ -7,4 +7,5 @@ class Search(TwitterRestApiBaseClass):
     def tweets(self, **kwargs):
         resource = self.resource + 'tweets'
         required = ['q']
-        return self.__get__(resource, required, kwargs)
+        response = self.__get__(resource, required, kwargs)  # use metadata for something else.
+        return response['statuses']
