@@ -13,7 +13,7 @@ class Twitter(object):
             raise TypeError("Keys are not strings")
         try:
             consumer = oauth.Consumer(self.consumer_key, self.consumer_secret)
-            access_token = oauth.Token(1, self.access_token_secret)
+            access_token = oauth.Token(self.access_token_key, self.access_token_secret)
 
             self.client = oauth.Client(consumer, access_token)
             self.base_url = 'https://api.twitter.com/1.1/'
@@ -23,7 +23,7 @@ class Twitter(object):
     def __get__(self, url):
         try:
             response, data = self.client.request(url)
-            return response
+            return data
         except:
             raise KeyError("invalid parameters passed to request.")
 
@@ -51,6 +51,6 @@ class TwitterRestApiBaseClass(object):
         if self.check_parameters(required, parameters):
             request = self.twitter.base_url + resource + '.json?'
             for key, value in parameters.items():
-                request = str(request + key + '=' + value + '&')
+                request = str(request + str(key) + '=' + str(value) + '&')
 
             return request[:-1]
