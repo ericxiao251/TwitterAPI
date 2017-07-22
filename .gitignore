@@ -102,3 +102,6 @@ ENV/
 
 # PyCharm project settings
 .idea
+
+# secrets folder
+secrets*.json
