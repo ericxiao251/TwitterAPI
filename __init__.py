@@ -1,4 +1,5 @@
 import json
+from pprint import pprint
 
 from twitter import Twitter
 from twitter.search import Search
@@ -15,4 +16,4 @@ if __name__ == '__main__':
     twitter_object = Twitter(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
     tweet = Search(twitter_object).tweet(q='%23freebandnames')
 
-    print(tweet)
+    pprint(tweet)
