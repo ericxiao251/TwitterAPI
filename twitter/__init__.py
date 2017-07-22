@@ -23,7 +23,7 @@ class Twitter(object):
     def __get__(self, url):
         try:
             response, data = self.client.request(url)
-            return json.loads(data)
+            return response, json.loads(data)
         except:
             raise KeyError("invalid parameters passed to request.")
 

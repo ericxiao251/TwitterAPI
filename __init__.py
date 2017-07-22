@@ -15,13 +15,14 @@ if __name__ == '__main__':
 
     twitter_object = Twitter(CONSUMER_KEY, CONSUMER_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
     params = dict(
-		q = '%23trump',
-	  	lang = 'en',
-	  	result_type = 'popular',
-		count = 100
-  	)
+        q = '%23trump',
+        lang = 'en',
+        result_type = 'popular',
+        count = 100
+    )
 
     tweets = Search(twitter_object).tweets(**params)
 
     for tweet in tweets:
-        pprint(tweet)
+        if not tweet['truncated']:
+            pprint(tweet)
