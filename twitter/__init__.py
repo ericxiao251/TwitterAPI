@@ -1,6 +1,9 @@
 import oauth2 as oauth
 import json
 
+from twitter.utils import flatten_dict
+
+
 class Twitter(object):
     def __init__(self, consumer_key, consumer_secret, access_token_key, access_token_secret):
         self.consumer_key = consumer_key
@@ -23,7 +26,8 @@ class Twitter(object):
     def __get__(self, url):
         try:
             response, data = self.client.request(url)
-            return response, json.loads(data)
+            data = json.loads(data)
+            return response, [flatten_dict(tweet) for tweet in data['statuses']]
         except:
             raise KeyError("invalid parameters passed to request.")
 
