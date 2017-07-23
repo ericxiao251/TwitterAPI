@@ -39,7 +39,7 @@ class TwitterRestApiBaseClass(object):
         else:
             raise TypeError("a twitter object was not passed in.")
 
-    def __get__(self, resource, required, parameters):
+    def __get__(self, resource = [], required = [], parameters = {}):
         url = self.build_response_query(resource, required, parameters)
         return self.twitter.__get__(url)
 
