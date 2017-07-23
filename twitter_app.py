@@ -1,3 +1,5 @@
+import pandas as pd
+
 import json
 from pprint import pprint
 
@@ -22,7 +24,6 @@ if __name__ == '__main__':
     )
 
     tweets = Search(twitter_object).tweets(**params)
+    df = pd.DataFrame(tweets)
 
-    for tweet in tweets:
-        if not tweet['truncated']:
-            pprint(tweet)
+    print(df.head())
